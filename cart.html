@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+
+#container{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+
+
+}
+    </style>
+    
+  </head>
+  <body>
+    <h1></h1>
+    <button><a href="checkout.html" target="blank">Checkout</a></button>
+    <div id="container">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var cartData = JSON.parse(localStorage.getItem("cart"));
+  console.log(cartData);
+
+  var total = cartData.reduce(function (sum, elem, index, arr) {
+    return sum + Number(elem.price);
+  }, 0);
+
+// hanged
+  
+
+   
+
+  //  hang
+
+  var length = cartData.length;
+  // console.log(length);
+
+  
+
+
+
+  console.log(total);
+  // total is Rs 16365
+  //`` - template literals
+  document.querySelector(
+    "h1"
+).innerText = ` you have ${length} items in cart and  total is Rs ${total}`;
+
+  cartData.map(function (elem, index) {
+    var box = document.createElement("div");
+
+    var img = document.createElement("img");
+    img.src = elem.image_url;
+
+    var name = document.createElement("p");
+    name.textContent = elem.name;
+
+    var price = document.createElement("p");
+    price.innerText = elem.price + "-"+ elem.quant;
+
+      
+    var superd = document.createElement("button");
+    superd.innerText = "super";
+    superd.addEventListener("click", function () {
+      addToCart(elem,index);
+    });
+
+
+    
+    var downd = document.createElement("button");
+    downd.innerText = "down";
+    downd.addEventListener("click", function () {
+      addToCarts(elem,index);
+    });
+
+  
+    var btn = document.createElement("button");
+    btn.innerText = "Remove";
+    btn.addEventListener("click", function () {
+      removeItem(elem, index);
+
+    });
+
+    box.append(img, name, price, btn,superd,downd );
+    
+
+    document.querySelector("#container").append(box);
+  });
+
+
+  
+  function  addToCart(elem,index){
+   cartData[index].quant++
+   console.log(cartData)
+   localStorage.setItem("cart", JSON.stringify(cartData))
+   window.location.reload();
+   displayData(cartData)
+}
+
+
+function  addToCarts(elem,index){
+   cartData[index].quant--
+   console.log(cartData)
+   localStorage.setItem("cart", JSON.stringify(cartData))
+   window.location.reload();
+   displayData(cartData)
+}
+
+
+
+  function removeItem(elem, index) {
+    console.log(elem, index);
+    cartData.splice(index, 1);
+    console.log(cartData);
+    localStorage.setItem("cart", JSON.stringify(cartData))
+    window.location.reload();
+  }
+
+
+
+  
+  //    var arr =[1,2,3,4]
+  //    console.log(arr.splice(0,1)) // []
+</script>
